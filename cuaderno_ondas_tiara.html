@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Física de Ondas – Movimiento Ondulatorio</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+:root {
+  --purple-dark: #3d1a6e;
+  --purple-main: #6b3fa0;
+  --purple-mid: #8b5bbf;
+  --purple-light: #b48fd8;
+  --purple-pale: #e8d8f8;
+  --purple-ultra: #f5eeff;
+  --accent-teal: #00c9b1;
+  --accent-pink: #e040fb;
+  --accent-yellow: #ffd600;
+  --accent-orange: #ff7043;
+  --paper: #fdfaff;
+  --lines: #d8c8f0;
+  --ring: #9c6dce;
+  --text-dark: #2a1040;
+  --text-mid: #5a3880;
+  --shadow: rgba(107,63,160,0.18);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: linear-gradient(135deg, #2a0a4a 0%, #4a1a7a 40%, #6b3fa0 100%);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* ── COVER ── */
+#cover {
+  max-width: 780px;
+  margin: 0 auto 30px;
+  background: linear-gradient(160deg, #3d1a6e 0%, #6b3fa0 60%, #8b5bbf 100%);
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  min-height: 380px;
+}
+
+#cover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 34px, rgba(255,255,255,0.04) 34px, rgba(255,255,255,0.04) 35px);
+}
+
+.cover-spine {
+  width: 52px;
+  background: linear-gradient(180deg, #2a0a4a, #4a1a7a);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+  gap: 12px;
+  flex-shrink: 0;
+  border-right: 3px solid #7c4faf;
+}
+
+.ring {
+  width: 28px; height: 28px;
+  border: 4px solid var(--ring);
+  border-radius: 50%;
+  background: linear-gradient(135deg, #b48fd8, #6b3fa0);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+
+.cover-body {
+  flex: 1;
+  padding: 40px 40px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.cover-waves {
+  font-size: 52px;
+  letter-spacing: 4px;
+  color: var(--accent-teal);
+  text-shadow: 0 0 30px rgba(0,201,177,0.5);
+  margin-bottom: 8px;
+  animation: wave-pulse 2s ease-in-out infinite;
+}
+
+@keyframes wave-pulse {
+  0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)}
+}
+
+.cover-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 48px;
+  color: #fff;
+  text-shadow: 0 3px 15px rgba(0,0,0,0.4);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.cover-subtitle {
+  font-family: 'Fredoka One', cursive;
+  font-size: 22px;
+  color: var(--accent-teal);
+  margin-bottom: 20px;
+}
+
+.cover-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.12);
+  border: 2px solid rgba(255,255,255,0.25);
+  border-radius: 30px;
+  padding: 8px 22px;
+  color: #e0cfff;
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 24px;
+  letter-spacing: 1px;
+}
+
+.cover-author {
+  font-family: 'Caveat', cursive;
+  font-size: 22px;
+  color: #fff;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  padding-top: 16px;
+}
+
+.cover-author span { color: var(--accent-yellow); font-size: 26px; font-weight: 700; }
+
+/* ── TOC ── */
+.toc-page {
+  max-width: 780px;
+  margin: 0 auto 30px;
+  background: var(--paper);
+  border-radius: 18px;
+  box-shadow: 0 10px 40px var(--shadow);
+  overflow: hidden;
+  display: flex;
+}
+
+.page-spine {
+  width: 52px;
+  background: var(--purple-dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.page-spine .ring {
+  width: 26px; height: 26px;
+  border-color: var(--purple-light);
+  background: var(--purple-mid);
+}
+
+.page-content {
+  flex: 1;
+  padding: 36px 36px 30px;
+  background: var(--paper);
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 34px, var(--lines) 34px, var(--lines) 35px),
+    linear-gradient(90deg, transparent 59px, #e0c8f8 59px, #e0c8f8 61px, transparent 61px);
+  position: relative;
+}
+
+.section-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 26px;
+  color: var(--purple-dark);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 8px;
+  border-bottom: 3px solid var(--purple-light);
+}
+
+.toc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.toc-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all .2s;
+  text-decoration: none;
+  color: var(--text-dark);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.toc-item:hover { background: var(--purple-pale); transform: translateX(4px); }
+
+.toc-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+/* ── NOTEBOOK PAGES ── */
+.notebook-page {
+  max-width: 780px;
+  margin: 0 auto 30px;
+  background: var(--paper);
+  border-radius: 18px;
+  box-shadow: 0 10px 40px var(--shadow);
+  overflow: hidden;
+  display: flex;
+}
+
+.page-body {
+  flex: 1;
+  padding: 30px 34px;
+  background: var(--paper);
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 34px, var(--lines) 34px, var(--lines) 35px),
+    linear-gradient(90deg, transparent 59px, #e0c8f8 59px, #e0c8f8 61px, transparent 61px);
+}
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.full-col { grid-column: 1 / -1; }
+
+.topic-header {
+  font-family: 'Fredoka One', cursive;
+  font-size: 24px;
+  color: var(--purple-dark);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding-bottom: 6px;
+  border-bottom: 3px solid var(--purple-light);
+}
+
+.card {
+  background: rgba(255,255,255,0.8);
+  border-radius: 14px;
+  padding: 16px 18px;
+  border: 1px solid var(--purple-pale);
+  margin-bottom: 14px;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.card-title {
+  font-weight: 800;
+  color: var(--purple-dark);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.card p {
+  font-size: 13.5px;
+  color: var(--text-dark);
+  line-height: 1.65;
+}
+
+.card b { color: var(--purple-dark); }
+
+.highlight {
+  background: linear-gradient(135deg, var(--purple-pale), #f0e4ff);
+  border-left: 4px solid var(--purple-main);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 10px 0;
+  font-size: 13px;
+  color: var(--text-dark);
+  line-height: 1.6;
+}
+
+.formula-box {
+  background: linear-gradient(135deg, #3d1a6e, #6b3fa0);
+  color: #fff;
+  border-radius: 12px;
+  padding: 14px 20px;
+  text-align: center;
+  font-family: 'Courier New', monospace;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 12px 0;
+  box-shadow: 0 4px 16px var(--shadow);
+  letter-spacing: 1px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  margin: 2px;
+}
+
+/* ── SIMULATORS ── */
+.simulator {
+  background: linear-gradient(135deg, #2a0a4a, #4a1a7a);
+  border-radius: 16px;
+  padding: 20px;
+  margin: 14px 0;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.sim-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 16px;
+  color: var(--accent-teal);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+canvas { display: block; border-radius: 10px; }
+
+.sim-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+  align-items: center;
+}
+
+.ctrl-group { display: flex; flex-direction: column; gap: 3px; font-size: 11px; color: var(--purple-light); }
+
+.ctrl-group input[type=range] {
+  accent-color: var(--accent-teal);
+  width: 110px;
+}
+
+.ctrl-group input[type=checkbox] { accent-color: var(--accent-teal); }
+
+.sim-btn {
+  background: linear-gradient(135deg, var(--accent-teal), #00a090);
+  border: none;
+  color: #fff;
+  padding: 7px 16px;
+  border-radius: 20px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+}
+
+.sim-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,201,177,.4); }
+.sim-btn:active { transform: translateY(0); }
+
+.sim-btn.danger { background: linear-gradient(135deg, #e040fb, #b020d0); }
+
+/* Table */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+  margin-top: 10px;
+}
+
+.data-table th {
+  background: var(--purple-dark);
+  color: #fff;
+  padding: 8px 10px;
+  text-align: left;
+  font-weight: 700;
+}
+
+.data-table td {
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--purple-pale);
+  color: var(--text-dark);
+}
+
+.data-table tr:nth-child(even) td { background: var(--purple-ultra); }
+
+/* Warning box */
+.warning-box {
+  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+  border: 2px solid var(--accent-orange);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 12.5px;
+  color: #7a3000;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+/* Page number */
+.page-num {
+  position: absolute;
+  bottom: 12px;
+  right: 16px;
+  font-family: 'Caveat', cursive;
+  font-size: 18px;
+  color: var(--purple-light);
+  font-weight: 700;
+}
+
+/* NAV */
+.nav-bar {
+  max-width: 780px;
+  margin: 0 auto 20px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.nav-btn {
+  background: rgba(255,255,255,0.12);
+  border: 2px solid rgba(255,255,255,0.2);
+  color: #fff;
+  padding: 7px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  transition: all .2s;
+}
+
+.nav-btn:hover, .nav-btn.active {
+  background: var(--purple-mid);
+  border-color: var(--purple-light);
+}
+
+/* SPECTRUM TABLE */
+.spectrum-row { display: flex; align-items: center; gap: 10px; padding: 5px 0; border-bottom: 1px solid var(--lines); font-size: 12.5px; }
+.spectrum-color { width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0; }
+
+/* Interference display */
+#interference-canvas { background: #0a0020; border-radius: 10px; }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<div class="nav-bar">
+  <button class="nav-btn active" onclick="scrollTo(0,0)">📖 Portada</button>
+  <button class="nav-btn" onclick="document.getElementById('s1').scrollIntoView({behavior:'smooth'})">🌊 Mov. Ondulatorio</button>
+  <button class="nav-btn" onclick="document.getElementById('s2').scrollIntoView({behavior:'smooth'})">⚡ Perturbación</button>
+  <button class="nav-btn" onclick="document.getElementById('s3').scrollIntoView({behavior:'smooth'})">📐 Clasificación</button>
+  <button class="nav-btn" onclick="document.getElementById('s4').scrollIntoView({behavior:'smooth'})">🔬 Mecánicas/EM</button>
+  <button class="nav-btn" onclick="document.getElementById('s5').scrollIntoView({behavior:'smooth'})">🌌 Ondas Grav.</button>
+  <button class="nav-btn" onclick="document.getElementById('s6').scrollIntoView({behavior:'smooth'})">📏 Anatomía</button>
+  <button class="nav-btn" onclick="document.getElementById('s7').scrollIntoView({behavior:'smooth'})">🔢 Descripción Mat.</button>
+  <button class="nav-btn" onclick="document.getElementById('s8').scrollIntoView({behavior:'smooth'})">🎵 Sonido</button>
+  <button class="nav-btn" onclick="document.getElementById('s9').scrollIntoView({behavior:'smooth'})">🔊 Doppler</button>
+  <button class="nav-btn" onclick="document.getElementById('s10').scrollIntoView({behavior:'smooth'})">🌊 Tsunamis</button>
+</div>
+
+<!-- COVER -->
+<div id="cover">
+  <div class="cover-spine">
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+  </div>
+  <div class="cover-body">
+    <div class="cover-waves">〰〰〰</div>
+    <div class="cover-title">FÍSICA DE ONDAS</div>
+    <div class="cover-subtitle">Movimiento Ondulatorio</div>
+    <div class="cover-badge">⚛ FÍSICA FUNDAMENTAL</div>
+    <div style="color:#d0b8f8;font-size:13px;margin-bottom:16px;">Msc. Néstor Fabio Montoya Palacios</div>
+    <div class="cover-author">Presentado por: <span>Tiara Santana</span></div>
+  </div>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc-page">
+  <div class="page-spine">
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+  </div>
+  <div class="page-content" style="padding:36px;">
+    <div class="section-title">≡ Índice de Contenidos</div>
+    <div class="toc-grid">
+      <a class="toc-item" onclick="document.getElementById('s1').scrollIntoView({behavior:'smooth'})">
+        <div class="toc-icon" style="background:#e8d8f8;color:#6b3fa0;">≡</div>01 Movimiento Ondulatorio
+      </a>
+      <a class="toc-item" onclick="document.getElementById('s2').scrollIntoView({behavior:'smooth'})">
+        <div class="toc-icon" style="background:#d1f8f0;color:#00a090;">〜</div>02 Perturbación, Pulso y Onda
+      </a>
+      <a class="toc-item" onclick="document.getElementById('s3').scrollIntoView({behavior:'smooth'})">
+        <div class="toc-icon" style="background:#fce4ec;color:#e040fb;">▲</div>03 Clasificación de las Ondas
+      </a>
+      <a class="toc-item" onclick="document.getElementById('s4').scrollIntoView({behavior:'smooth'})">
+        <div class="toc-icon" style="background:#fff8e1;color:#f57f17;">⚡</div>04 Mecánicas y Electromagnéticas
+      </a>
+      <a class="toc-item" onclick="document.getElementById('s5').scrollIntoView({behavior:'smooth'})">
+        <div class="toc-icon" style="background:#ede7f6;color:#4527a0;">🌌</div>05 Ondas Gravitacionales y LIGO
+      </a>
+      <a class="toc-item" onclick="document.getElementById('s6').scrollIntoView({behavior:'smooth'})">
+        <div class="toc-icon" style="background:#fce4ec;color:#c62828;">📐</div>06 Anatomía de una Onda
+      </a>
+      <a class="toc-item" onclick="document.getElementById('s7').scrollIntoView({behavior:'smooth'})">
+        <div class="toc-icon" style="background:#e8f5e9;color:#2e7d32;">√</div>07 Descripción Matemática
+      </a>
+      <a class="toc-item" onclick="document.getElementById('s8').scrollIntoView({behavior:'smooth'})">
+        <div class="toc-icon" style="background:#e3f2fd;color:#1565c0;">🎵</div>08 Sonido e Intensidad
+      </a>
+      <a class="toc-item" onclick="document.getElementById('s9').scrollIntoView({behavior:'smooth'})">
+        <div class="toc-icon" style="background:#fff3e0;color:#e65100;">📡</div>09 Efecto Doppler
+      </a>
+      <a class="toc-item" onclick="document.getElementById('s10').scrollIntoView({behavior:'smooth'})">
+        <div class="toc-icon" style="background:#e8eaf6;color:#283593;">🌊</div>10 Ondas en Líquidos
+      </a>
+    </div>
+    <div class="page-num">i</div>
+  </div>
+</div>
+
+<!-- ── SECTION 1: MOVIMIENTO ONDULATORIO ── -->
+<div class="notebook-page" id="s1">
+  <div class="page-spine">
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+  </div>
+  <div class="page-body">
+    <div class="two-col">
+      <div>
+        <div class="topic-header">〰 Movimiento Ondulatorio</div>
+        <div class="card">
+          <div class="card-title" style="color:#6b3fa0;">📌 Propagación de una perturbación</div>
+          <p>Si en un punto de un medio material cualquiera (sólido, líquido o gas) se produce una <b>perturbación</b> que desplaza de su posición de equilibrio la partícula situada en él, como cuando se deja caer un cuerpo en el agua, la perturbación no permanece localizada en el lugar donde se produjo, sino que al cabo de un tiempo se va transmitiendo a las partículas circundantes.</p>
+          <br><p>Este proceso recibe el nombre de <b>propagación de una perturbación</b>. El lugar inicial donde se produce se llama <b>foco</b>.</p>
+        </div>
+      </div>
+      <div>
+        <div class="topic-header" style="font-size:20px;">↑ Características de la propagación</div>
+        <div class="card">
+          <p>Si la perturbación se propaga en una <b>dirección determinada</b>, como el caso de una pulsación en una cuerda tensa, avanza una gran distancia <b>sin amortiguamiento</b>.</p>
+          <br>
+          <p>Si se propaga en una <b>superficie o en el espacio</b>, como el sonido, la intensidad disminuye al aumentar la distancia al foco.</p>
+        </div>
+        <div class="highlight">
+          Cuando la partícula inicial se desplaza de su posición de equilibrio, comienza a vibrar, produciéndose nuevas perturbaciones que se <b>amortiguan rápidamente</b> con la distancia al foco.
+        </div>
+      </div>
+    </div>
+
+    <!-- SIMULATOR: Wave propagation -->
+    <div class="simulator">
+      <div class="sim-title">🌊 Simulador: Propagación de Onda</div>
+      <canvas id="wave-canvas" width="680" height="140"></canvas>
+      <div class="sim-controls">
+        <div class="ctrl-group">
+          <label>Amplitud: <span id="amp-val">40</span></label>
+          <input type="range" id="amp" min="10" max="70" value="40" oninput="document.getElementById('amp-val').textContent=this.value">
+        </div>
+        <div class="ctrl-group">
+          <label>Frecuencia: <span id="freq-val">1.5</span> Hz</label>
+          <input type="range" id="freq" min="5" max="40" value="15" oninput="document.getElementById('freq-val').textContent=(this.value/10).toFixed(1)">
+        </div>
+        <div class="ctrl-group">
+          <label>Velocidad: <span id="spd-val">2</span></label>
+          <input type="range" id="spd" min="1" max="10" value="2" oninput="document.getElementById('spd-val').textContent=this.value">
+        </div>
+        <div class="ctrl-group">
+          <label><input type="checkbox" id="damp" checked> Amortiguamiento</label>
+        </div>
+        <button class="sim-btn" onclick="waveRunning=!waveRunning;this.textContent=waveRunning?'⏸ Pausa':'▶ Reanudar'">⏸ Pausa</button>
+      </div>
+    </div>
+    <div class="page-num">1</div>
+  </div>
+</div>
+
+<!-- ── SECTION 2: PERTURBACIÓN, PULSO Y ONDA ── -->
+<div class="notebook-page" id="s2">
+  <div class="page-spine">
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+  </div>
+  <div class="page-body">
+    <div class="two-col">
+      <div>
+        <div class="topic-header">〜 Perturbación, Pulso y Onda</div>
+        <div class="card">
+          <div class="card-title" style="color:#00a090;">⭕ Perturbación</div>
+          <p>Una <b>perturbación</b> es cualquier alteración del estado de equilibrio de un sistema. Es el origen de toda onda. Cuando lanzamos una piedra a un estanque de agua tranquila, creamos una perturbación en la superficie que se propaga alejándose del punto de impacto en forma de <b>círculos concéntricos</b>.</p>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:#6b3fa0;">〜 Pulso Ondulatorio</div>
+          <p>Un <b>pulso ondulatorio</b> es una perturbación <em>aislada y única</em> que viaja a través de un medio. Si tomamos una cuerda tensa y damos un solo tirón rápido, generamos un pulso. Tiene <b>duración temporal finita</b> y no se repite.</p>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:#e040fb;">≡ Onda Periódica (Tren de ondas)</div>
+          <p>Una <b>onda periódica</b> es una sucesión continua de perturbaciones generadas en intervalos de tiempo regulares. Se produce cuando la fuente oscila de manera <b>continua y repetitiva</b>.</p>
+        </div>
+      </div>
+      <div>
+        <div class="topic-header" style="font-size:20px;">🌀 El Concepto de Onda</div>
+        <div class="card">
+          <div class="card-title" style="color:#2196f3;">⭐ Onda</div>
+          <p>Una <b>onda</b> es la propagación de una perturbación (energía y cantidad de movimiento) a través del espacio o de un medio material, <b style="color:#e040fb;">sin que exista un transporte neto de materia</b>. Las partículas del medio oscilan alrededor de su posición de equilibrio, pero no viajan con la onda.</p>
+        </div>
+        <div class="highlight" style="border-color:#00a090;background:linear-gradient(135deg,#d1f8f0,#e8fff9);">
+          <b>La ola en el estadio:</b> Cuando los aficionados hacen "la ola", cada persona solo se levanta y se sienta en su lugar. La perturbación viaja, pero las personas <b>no se desplazan</b> en la dirección de propagación.
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:#e040fb;">📍 Foco o Fuente</div>
+          <p>Se llama <b>foco</b>, <b>fuente</b> o <b>emisor</b> al punto o región donde se origina la perturbación.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pulse Simulator -->
+    <div class="simulator">
+      <div class="sim-title">〜 Simulador: Pulso vs Onda Periódica</div>
+      <canvas id="pulse-canvas" width="680" height="120"></canvas>
+      <div class="sim-controls">
+        <button class="sim-btn" onclick="firePulse()">🚀 Lanzar Pulso</button>
+        <button class="sim-btn" onclick="togglePeriodic()" id="period-btn">▶ Onda Periódica</button>
+        <div class="ctrl-group">
+          <label>Ancho pulso: <span id="pw-val">60</span></label>
+          <input type="range" id="pw" min="20" max="120" value="60" oninput="document.getElementById('pw-val').textContent=this.value">
+        </div>
+        <button class="sim-btn danger" onclick="resetPulse()">🔄 Reiniciar</button>
+      </div>
+    </div>
+    <div class="page-num">2</div>
+  </div>
+</div>
+
+<!-- ── SECTION 3: CLASIFICACIÓN ── -->
+<div class="notebook-page" id="s3">
+  <div class="page-spine">
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+  </div>
+  <div class="page-body">
+    <div class="two-col">
+      <div>
+        <div class="topic-header">▲ Clasificación de las Ondas</div>
+        <div class="card">
+          <p>Las ondas se pueden clasificar de acuerdo a dos criterios: el primero es teniendo en cuenta la <b>dirección en que vibran las partículas</b> y el otro es en función a la <b>naturaleza del medio de propagación</b>.</p>
+        </div>
+        <div class="card" style="border-left:4px solid #00a090;">
+          <div class="card-title" style="color:#00a090;">↕ Onda Transversal</div>
+          <p>Una onda es <b>transversal</b> si las partículas del medio vibran <b>perpendicularmente</b> a la dirección de propagación de la onda.</p>
+          <br><p style="font-size:12px;color:#888;">Ejemplo: ondas en una cuerda, luz.</p>
+        </div>
+        <div class="card" style="border-left:4px solid #e040fb;">
+          <div class="card-title" style="color:#e040fb;">↔ Onda Longitudinal</div>
+          <p>Una onda es <b>longitudinal</b> si las partículas del medio vibran <b>paralelamente</b> a la dirección de propagación de la onda.</p>
+          <br><p style="font-size:12px;color:#888;">Ejemplo: sonido, ondas sísmicas P.</p>
+        </div>
+      </div>
+      <div>
+        <div class="topic-header" style="font-size:20px;">⚙ Ondas Mecánicas y EM</div>
+        <div class="card" style="border-left:4px solid #f57f17;">
+          <div class="card-title" style="color:#f57f17;">⚙ Ondas Mecánicas</div>
+          <p>Se llaman <b>ondas mecánicas</b> a aquellas ondas que necesitan un <b>medio material</b> para propagarse. Las ondas mecánicas no se propagan en el vacío. Por ejemplo el sonido.</p>
+        </div>
+        <div class="card" style="border-left:4px solid #2196f3;">
+          <div class="card-title" style="color:#2196f3;">⚡ Ondas Electromagnéticas</div>
+          <p>Las ondas electromagnéticas <b>no necesitan un medio material</b> para propagarse. Se generan por la aceleración de cargas eléctricas, produciendo oscilaciones de un campo eléctrico <b>Ē</b> y magnético <b>B̄</b> perpendiculares entre sí.</p>
+          <br><p>En el vacío viajan a la velocidad de la luz: <b>c = 3×10⁸ m/s</b></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Transverse vs Longitudinal Simulator -->
+    <div class="simulator">
+      <div class="sim-title">📐 Simulador: Transversal vs Longitudinal</div>
+      <canvas id="wavetype-canvas" width="680" height="160"></canvas>
+      <div class="sim-controls">
+        <button class="sim-btn" id="wt-btn" onclick="toggleWaveType()">🔄 Cambiar a Longitudinal</button>
+        <div class="ctrl-group">
+          <label>Velocidad: <span id="wt-spd-val">3</span></label>
+          <input type="range" id="wt-spd" min="1" max="8" value="3" oninput="document.getElementById('wt-spd-val').textContent=this.value">
+        </div>
+        <div class="ctrl-group">
+          <label>Amplitud: <span id="wt-amp-val">30</span></label>
+          <input type="range" id="wt-amp" min="10" max="55" value="30" oninput="document.getElementById('wt-amp-val').textContent=this.value">
+        </div>
+      </div>
+    </div>
+    <div class="page-num">3</div>
+  </div>
+</div>
+
+<!-- ── SECTION 4: MECÁNICAS / EM / ESPECTRO ── -->
+<div class="notebook-page" id="s4">
+  <div class="page-spine">
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+  </div>
+  <div class="page-body">
+    <div class="two-col">
+      <div>
+        <div class="topic-header">⚙ Ondas Mecánicas</div>
+        <div class="card">
+          <div class="card-title">📋 Definición</div>
+          <p>Las ondas mecánicas son aquellas que <b>requieren obligatoriamente de un medio material elástico</b> (sólido, líquido o gas) para poder propagarse. En el vacío no pueden existir. ¡Por ello, en el espacio exterior nadie puede escuchar tus gritos!</p>
+        </div>
+        <div class="highlight">
+          Para que una onda mecánica se propague, el medio debe poseer:<br>
+          <b>Inercia:</b> Capacidad de las partículas para resistir cambios en su movimiento.<br>
+          <b>Elasticidad:</b> Capacidad de recuperar su forma inicial.
+        </div>
+        <div class="highlight" style="border-color:#00a090;background:linear-gradient(135deg,#d1f8f0,#e8fff9);">
+          <b>Velocidad de propagación:</b> La velocidad de una onda mecánica no depende de la fuente, sino exclusivamente de las <b>propiedades físicas del medio</b> (densidad, temperatura, módulo de elasticidad).<br><br>
+          <em>Ejemplos: sonido, ondas sísmicas (P y S), ondas en cuerdas de guitarra, olas del océano.</em>
+        </div>
+      </div>
+      <div>
+        <div class="topic-header" style="font-size:20px;">⚡ Espectro Electromagnético</div>
+        <table class="data-table">
+          <tr><th>Tipo</th><th>λ aprox.</th><th>Aplicaciones</th></tr>
+          <tr><td>Ondas de radio</td><td>>1 m</td><td>Radio AM/FM</td></tr>
+          <tr><td>Microondas</td><td>1 mm – 1 m</td><td>Hornos, Wi-Fi</td></tr>
+          <tr><td>Infrarrojo</td><td>700 nm – 1 mm</td><td>Mandos, visión nocturna</td></tr>
+          <tr><td><b style="color:#8b5bbf;">Luz visible</b></td><td>400 – 700 nm</td><td>Visión humana</td></tr>
+          <tr><td>Ultravioleta</td><td>10 – 400 nm</td><td>Desinfección</td></tr>
+          <tr><td>Rayos X</td><td>0.01 – 10 nm</td><td>Medicina</td></tr>
+          <tr><td>Rayos gamma</td><td>&lt;0.01 nm</td><td>Radioterapia</td></tr>
+        </table>
+        <!-- Mini spectrum visual -->
+        <div style="margin-top:12px;">
+          <div class="spectrum-row"><div class="spectrum-color" style="background:#8B00FF;"></div><span>Violeta ~400 nm</span></div>
+          <div class="spectrum-row"><div class="spectrum-color" style="background:#4B0082;"></div><span>Añil ~445 nm</span></div>
+          <div class="spectrum-row"><div class="spectrum-color" style="background:#0000FF;"></div><span>Azul ~475 nm</span></div>
+          <div class="spectrum-row"><div class="spectrum-color" style="background:#00FF00;"></div><span>Verde ~510 nm</span></div>
+          <div class="spectrum-row"><div class="spectrum-color" style="background:#FFFF00;"></div><span>Amarillo ~570 nm</span></div>
+          <div class="spectrum-row"><div class="spectrum-color" style="background:#FF7F00;"></div><span>Naranja ~590 nm</span></div>
+          <div class="spectrum-row"><div class="spectrum-color" style="background:#FF0000;"></div><span>Rojo ~700 nm</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="page-num">4</div>
+  </div>
+</div>
+
+<!-- ── SECTION 5: GRAVITACIONALES / LIGO ── -->
+<div class="notebook-page" id="s5">
+  <div class="page-spine">
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+  </div>
+  <div class="page-body">
+    <div class="two-col">
+      <div>
+        <div class="topic-header">🌌 Ondas Gravitacionales</div>
+        <div class="card" style="border-left:4px solid #7c4dff;">
+          <div class="card-title" style="color:#7c4dff;">📡 Definición</div>
+          <p>Las ondas gravitacionales son <b>ondulaciones en el tejido mismo del espacio-tiempo</b>, predichas por Albert Einstein en 1916 en su Teoría de la Relatividad General. Se generan cuando masas extremadamente grandes se aceleran violentamente.</p>
+        </div>
+        <div class="card">
+          <p>Son producidas por eventos cataclísmicos: colisión de agujeros negros, fusión de estrellas de neutrones, explosiones de supernovas. Viajan a la velocidad de la luz, <em>estirando y comprimiendo</em> el espacio-tiempo a su paso.</p>
+        </div>
+        <div class="highlight" style="border-color:#7c4dff;background:linear-gradient(135deg,#ede7f6,#f3e5f5);">
+          A diferencia de las ondas mecánicas (que perturban la materia) o las electromagnéticas (que perturban campos Ē y B̄), las ondas gravitacionales <b>distorsionan la geometría misma del espacio</b>.
+        </div>
+      </div>
+      <div>
+        <div class="topic-header" style="font-size:20px;">🔭 El Proyecto LIGO</div>
+        <div class="card" style="border-left:4px solid #00c9b1;">
+          <div class="card-title" style="color:#00a090;">🔬 LIGO</div>
+          <p><b>LIGO</b> (Laser Interferometer Gravitational-Wave Observatory) consta de dos observatorios con interferómetros de Michelson con brazos de <b>4 km</b>.</p>
+          <br>
+          <p>1. Un haz láser se divide en dos haces perpendiculares.</p>
+          <p>2. Cada haz recorre 4 km y regresa reflejado por espejos de ultra-precisión.</p>
+          <p>3. En reposo, los haces se cancelan (interferencia destructiva).</p>
+          <p>4. Una onda gravitacional altera el patrón de interferencia en <b>~10⁻¹⁸ m</b> (¡miles de veces más pequeño que un protón!).</p>
+        </div>
+        <div class="card" style="background:linear-gradient(135deg,#fff8e1,#fff3cd);border-color:#ffd600;">
+          <div class="card-title" style="color:#f57f17;">⭐ Primera detección histórica</div>
+          <p>El <b>14 de septiembre de 2015</b>, LIGO detectó por primera vez una onda gravitacional (evento <b>GW150914</b>), proveniente de la fusión de dos agujeros negros a ≈1300 millones de años luz. Sus creadores recibieron el <b>Premio Nobel de Física en 2017</b>.</p>
+        </div>
+      </div>
+    </div>
+    <div class="page-num">5</div>
+  </div>
+</div>
+
+<!-- ── SECTION 6: ANATOMÍA ── -->
+<div class="notebook-page" id="s6">
+  <div class="page-spine">
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+  </div>
+  <div class="page-body">
+    <div class="topic-header">📐 Anatomía de una Onda Transversal</div>
+    <div class="two-col">
+      <div>
+        <div class="card" style="border-left:4px solid #e040fb;">
+          <div class="card-title" style="color:#e040fb;">↑ Cresta</div>
+          <p>Punto de máxima elongación positiva – el punto <b>más alto</b> de la onda.</p>
+        </div>
+        <div class="card" style="border-left:4px solid #2196f3;">
+          <div class="card-title" style="color:#2196f3;">↓ Valle</div>
+          <p>Punto de máxima elongación negativa – el punto <b>más bajo</b> de la onda.</p>
+        </div>
+        <div class="card" style="border-left:4px solid #4caf50;">
+          <div class="card-title" style="color:#4caf50;">⭕ Nodo</div>
+          <p>Puntos donde la onda cruza la línea de equilibrio. El desplazamiento es <b>cero</b>.</p>
+        </div>
+        <div class="card" style="border-left:4px solid #ff7043;">
+          <div class="card-title" style="color:#ff7043;">↔ Longitud de onda (λ)</div>
+          <p>Distancia entre dos puntos consecutivos en el mismo estado de vibración (misma fase): de cresta a cresta, o de valle a valle.</p>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-title">📊 Magnitudes de la Onda</div>
+          <table class="data-table">
+            <tr><th>Magnitud</th><th>Símbolo</th><th>Unidad SI</th></tr>
+            <tr><td>Período</td><td><em>T</em></td><td>s</td></tr>
+            <tr><td>Frecuencia</td><td><em>f</em></td><td>Hz</td></tr>
+            <tr><td>Long. de onda</td><td>λ</td><td>m</td></tr>
+            <tr><td>Amplitud</td><td><em>A</em></td><td>m</td></tr>
+            <tr><td>Velocidad</td><td><em>v</em></td><td>m/s</td></tr>
+            <tr><td>Número de onda</td><td><em>k</em></td><td>rad/m</td></tr>
+          </table>
+        </div>
+        <div class="formula-box">v = λ · f = λ / T</div>
+        <div class="formula-box">k = 2π / λ</div>
+      </div>
+    </div>
+
+    <!-- Anatomy Simulator -->
+    <div class="simulator">
+      <div class="sim-title">📐 Simulador: Anatomía Interactiva de la Onda</div>
+      <canvas id="anatomy-canvas" width="680" height="160"></canvas>
+      <div class="sim-controls">
+        <div class="ctrl-group">
+          <label>Amplitud (A): <span id="an-amp-val">50</span> u</label>
+          <input type="range" id="an-amp" min="20" max="65" value="50" oninput="document.getElementById('an-amp-val').textContent=this.value">
+        </div>
+        <div class="ctrl-group">
+          <label>Long. onda (λ): <span id="an-lam-val">200</span> u</label>
+          <input type="range" id="an-lam" min="100" max="340" value="200" oninput="document.getElementById('an-lam-val').textContent=this.value">
+        </div>
+        <div class="ctrl-group">
+          <label><input type="checkbox" id="an-labels" checked> Mostrar etiquetas</label>
+        </div>
+      </div>
+    </div>
+    <div class="page-num">6</div>
+  </div>
+</div>
+
+<!-- ── SECTION 7: DESCRIPCIÓN MATEMÁTICA ── -->
+<div class="notebook-page" id="s7">
+  <div class="page-spine">
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+  </div>
+  <div class="page-body">
+    <div class="two-col">
+      <div>
+        <div class="topic-header">X₁ Descripción Matemática</div>
+        <div class="card">
+          <p>Imaginemos una perturbación que viaja en la dirección positiva de <em>x</em> con velocidad constante <em>v</em>. Si ψ representa la magnitud del campo que se propaga como onda:</p>
+        </div>
+        <div class="formula-box">ψ = f(x, t)</div>
+        <div class="card">
+          <div class="card-title">📸 Fotografiando la Onda</div>
+          <p>Si sacamos una fotografía de la onda viajando en el instante <em>t = 0</em>, su perfil espacial permanecerá como si estuviera "congelado":</p>
+        </div>
+        <div class="formula-box">ψ(x, 0) = f(x)</div>
+        <div class="formula-box">ψ(x,t) = f(x − v·t)</div>
+        <div class="card" style="border-left:4px solid #e040fb;">
+          <div class="card-title" style="color:#e040fb;">⇄ Onda hacia la izquierda</div>
+          <div class="formula-box" style="font-size:15px;">ψ(x,t) = f(x + v·t)</div>
+        </div>
+      </div>
+      <div>
+        <div class="topic-header" style="font-size:20px;">🔵 Relación Fundamental</div>
+        <div class="card" style="border-left:4px solid #00c9b1;">
+          <p>La ecuación <b>v = λ·f</b> es la relación fundamental que conecta la descripción geométrica (espacial) con la temporal de toda onda periódica.</p>
+          <div class="formula-box">v = λ · f = λ / T</div>
+        </div>
+        <div class="card">
+          <div class="card-title">🎵 Ejemplo: nota La musical</div>
+          <p>Una onda sonora en el aire a 20°C tiene frecuencia f = 440 Hz (nota La). Su longitud de onda es:</p>
+          <div class="formula-box" style="font-size:14px;">λ = v/f = 343/440 ≈ 0.78 m</div>
+        </div>
+        <div class="card">
+          <div class="card-title">🌊 Ecuación de Onda Armónica</div>
+          <div class="formula-box" style="font-size:13px;">ψ(x,t) = A sin(kx − ωt + φ₀)</div>
+          <br>
+          <div class="formula-box" style="font-size:13px;">k = 2π/λ &nbsp;&nbsp; ω = 2πf</div>
+        </div>
+        <div class="highlight">
+          <b>Principio de Superposición:</b><br>
+          ψ_total = ψ₁ + ψ₂ + ··· + ψₙ<br><br>
+          Interferencia constructiva: A_total = A₁ + A₂<br>
+          Interferencia destructiva: A_total = |A₁ − A₂|
+        </div>
+      </div>
+    </div>
+
+    <!-- Superposition Simulator -->
+    <div class="simulator">
+      <div class="sim-title">≡ Simulador: Superposición de Ondas</div>
+      <canvas id="super-canvas" width="680" height="150"></canvas>
+      <div class="sim-controls">
+        <div class="ctrl-group">
+          <label>Onda 1 – A₁: <span id="s1a-val">40</span></label>
+          <input type="range" id="s1a" min="10" max="60" value="40" oninput="document.getElementById('s1a-val').textContent=this.value">
+        </div>
+        <div class="ctrl-group">
+          <label>Onda 1 – f₁: <span id="s1f-val">1</span></label>
+          <input type="range" id="s1f" min="1" max="5" value="1" oninput="document.getElementById('s1f-val').textContent=this.value">
+        </div>
+        <div class="ctrl-group">
+          <label>Onda 2 – A₂: <span id="s2a-val">30</span></label>
+          <input type="range" id="s2a" min="10" max="60" value="30" oninput="document.getElementById('s2a-val').textContent=this.value">
+        </div>
+        <div class="ctrl-group">
+          <label>Onda 2 – f₂: <span id="s2f-val">2</span></label>
+          <input type="range" id="s2f" min="1" max="5" value="2" oninput="document.getElementById('s2f-val').textContent=this.value">
+        </div>
+        <div class="ctrl-group">
+          <label><input type="checkbox" id="show-components" checked> Ver componentes</label>
+        </div>
+      </div>
+    </div>
+    <div class="page-num">7</div>
+  </div>
+</div>
+
+<!-- ── SECTION 8: SONIDO ── -->
+<div class="notebook-page" id="s8">
+  <div class="page-spine">
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+  </div>
+  <div class="page-body">
+    <div class="two-col">
+      <div>
+        <div class="topic-header">🔊 Ondas de Sonido</div>
+        <div class="card">
+          <div class="card-title">🎵 Sonido</div>
+          <p>El sonido es una <b>onda mecánica, tridimensional y longitudinal</b>. Se propaga mediante zonas alternadas de alta presión (<em>compresiones</em>) y baja presión (<em>rarefacciones</em>) de las moléculas del medio.</p>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:#6b3fa0;">🎼 Propiedades del Sonido</div>
+          <p><b>Tono (altura):</b> Determinado por la frecuencia.</p>
+          <p><b>Intensidad:</b> Mayor amplitud → sonido más fuerte.</p>
+          <p><b>Timbre:</b> Determinado por la forma de onda (mezcla de armónicos). Permite distinguir instrumentos tocando la misma nota.</p>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:#00a090;">📊 Clasificación según frecuencia</div>
+          <p>• <b>Infrasonido:</b> f &lt; 20 Hz (elefantes, ballenas, terremotos)</p>
+          <p>• <b>Sonido audible:</b> 20 Hz – 20.000 Hz</p>
+          <p>• <b>Ultrasonido:</b> f &gt; 20.000 Hz (murciélagos, ecografías)</p>
+        </div>
+      </div>
+      <div>
+        <div class="topic-header" style="font-size:20px;">📏 Velocidad e Intensidad</div>
+        <div class="card">
+          <div class="card-title" style="color:#e040fb;">🏃 Velocidad del Sonido</div>
+          <div class="formula-box" style="font-size:13px;">v_aire ≈ 331 + 0.6·θ (m/s)</div>
+          <p style="font-size:12px;margin-top:6px;color:#888;">donde θ es la temperatura en °C</p>
+          <table class="data-table" style="margin-top:8px;">
+            <tr><th>Medio</th><th>Temp.</th><th>v (m/s)</th></tr>
+            <tr><td>Aire seco</td><td>0°C</td><td>331</td></tr>
+            <tr><td>Aire seco</td><td>20°C</td><td>343</td></tr>
+            <tr><td>Agua dulce</td><td>25°C</td><td>1.480</td></tr>
+            <tr><td>Agua de mar</td><td>25°C</td><td>1.520</td></tr>
+            <tr><td>Madera</td><td>20°C</td><td>3.850</td></tr>
+            <tr><td>Acero</td><td>20°C</td><td>5.100</td></tr>
+          </table>
+        </div>
+        <div class="card">
+          <div class="card-title">📢 Intensidad Sonora</div>
+          <div class="formula-box" style="font-size:15px;">I = P/S (W/m²)</div>
+          <div class="formula-box" style="font-size:14px;">β = 10·log₁₀(I/I₀) dB</div>
+          <p style="font-size:12px;margin-top:6px;">I₀ = 10⁻¹² W/m² (umbral de audición)</p>
+        </div>
+        <div class="warning-box">
+          ⚠ La exposición prolongada a niveles superiores a <b>85 dB</b> puede causar daño auditivo permanente.
+        </div>
+      </div>
+    </div>
+
+    <!-- Sound Wave Simulator -->
+    <div class="simulator">
+      <div class="sim-title">🎵 Simulador: Onda Sonora Armónica</div>
+      <canvas id="sound-canvas" width="680" height="130"></canvas>
+      <div class="sim-controls">
+        <div class="ctrl-group">
+          <label>Frecuencia: <span id="snd-f-val">440</span> Hz</label>
+          <input type="range" id="snd-f" min="100" max="2000" value="440" step="10" oninput="document.getElementById('snd-f-val').textContent=this.value">
+        </div>
+        <div class="ctrl-group">
+          <label>Amplitud: <span id="snd-a-val">50</span></label>
+          <input type="range" id="snd-a" min="10" max="60" value="50" oninput="document.getElementById('snd-a-val').textContent=this.value">
+        </div>
+        <div class="ctrl-group">
+          <label>Temperatura: <span id="snd-t-val">20</span>°C</label>
+          <input type="range" id="snd-t" min="-10" max="40" value="20" oninput="document.getElementById('snd-t-val').textContent=this.value">
+        </div>
+        <div id="snd-info" style="font-size:12px;color:#00c9b1;font-weight:700;"></div>
+      </div>
+    </div>
+    <div class="page-num">8</div>
+  </div>
+</div>
+
+<!-- ── SECTION 9: DOPPLER / DIFRACCIÓN / ESTACIONARIAS ── -->
+<div class="notebook-page" id="s9">
+  <div class="page-spine">
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+  </div>
+  <div class="page-body">
+    <div class="two-col">
+      <div>
+        <div class="topic-header">📡 Efecto Doppler</div>
+        <div class="card" style="border-left:4px solid #ff7043;">
+          <div class="card-title" style="color:#ff7043;">📋 Definición</div>
+          <p>El <b>efecto Doppler</b> es el cambio aparente en la frecuencia percibida, causado por el <b>movimiento relativo</b> entre la fuente y el observador.</p>
+          <br>
+          <p>• Se <b>acercan</b> → frecuencia <b>mayor</b> (agudo)</p>
+          <p>• Se <b>alejan</b> → frecuencia <b>menor</b> (grave)</p>
+        </div>
+        <div class="formula-box" style="font-size:13px;">f_obs = f_s · (v ± v_obs) / (v ∓ v_s)</div>
+        <div class="highlight">
+          <b>Ejemplo:</b> Ambulancia con sirena de 800 Hz a 30 m/s:<br>
+          Al acercarse: f_obs ≈ <b>876 Hz</b><br>
+          Al alejarse: f_obs ≈ <b>734 Hz</b>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:#2196f3;">🔀 Difracción de Ondas</div>
+          <p>La <b>difracción</b> es la capacidad de una onda de <b>rodear obstáculos</b> o de expandirse al pasar por aberturas. Es un fenómeno exclusivo de las ondas. Más pronunciada cuando λ ≈ tamaño del obstáculo.</p>
+        </div>
+      </div>
+      <div>
+        <div class="topic-header" style="font-size:20px;">🎸 Ondas Estacionarias</div>
+        <div class="card">
+          <p>Una <b>onda estacionaria</b> se forma cuando dos ondas armónicas de igual frecuencia, amplitud y longitud de onda viajan en <b>sentidos opuestos</b> y se superponen.</p>
+          <div class="formula-box" style="font-size:13px;">ψ(x,t) = 2A·cos(ωt)·sin(kx)</div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:#6b3fa0;">🎵 Armónicos en una Cuerda</div>
+          <p>Una cuerda de longitud <em>L</em> fija en ambos extremos solo vibra en ciertas frecuencias de resonancia:</p>
+          <div class="formula-box" style="font-size:14px;">fₙ = n · v / (2L) = n · f₁</div>
+          <p style="font-size:12px;margin-top:6px;">n = 1, 2, 3, … (armónicos)</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Doppler Simulator -->
+    <div class="simulator">
+      <div class="sim-title">📡 Simulador: Efecto Doppler</div>
+      <canvas id="doppler-canvas" width="680" height="150"></canvas>
+      <div class="sim-controls">
+        <div class="ctrl-group">
+          <label>Velocidad fuente: <span id="dop-vs-val">30</span> m/s</label>
+          <input type="range" id="dop-vs" min="0" max="300" value="30" oninput="document.getElementById('dop-vs-val').textContent=this.value">
+        </div>
+        <div class="ctrl-group">
+          <label>Frecuencia fuente: <span id="dop-fs-val">800</span> Hz</label>
+          <input type="range" id="dop-fs" min="200" max="2000" value="800" step="50" oninput="document.getElementById('dop-fs-val').textContent=this.value">
+        </div>
+        <div id="dop-info" style="font-size:12px;color:#ffd600;font-weight:700;"></div>
+      </div>
+    </div>
+    <div class="page-num">9</div>
+  </div>
+</div>
+
+<!-- ── SECTION 10: TSUNAMIS / RESUMEN ── -->
+<div class="notebook-page" id="s10">
+  <div class="page-spine">
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+  </div>
+  <div class="page-body">
+    <div class="two-col">
+      <div>
+        <div class="topic-header">🌊 Ondas en Líquidos (Superficiales)</div>
+        <div class="card">
+          <div class="card-title">🌊 Ondas Superficiales</div>
+          <p>Las olas en la superficie del océano no son puramente transversales ni longitudinales. Son una <b>combinación de ambas</b>. Una partícula de agua describe una trayectoria <b>circular u elíptica</b>.</p>
+        </div>
+        <div class="card" style="border-left:4px solid #e040fb;">
+          <div class="card-title" style="color:#e040fb;">🌊 Tsunamis</div>
+          <p>Los tsunamis son ondas de <em>aguas poco profundas</em> (su λ puede superar los <b>200 km</b>). Su velocidad alcanza <b>700–900 km/h</b>.</p>
+          <br>
+          <p>En alta mar su amplitud es pequeña (no se perciben en barcos), pero al acercarse a la costa, la profundidad disminuye, la velocidad cae y la <b>amplitud crece dramáticamente</b>.</p>
+        </div>
+      </div>
+      <div>
+        <div class="topic-header" style="font-size:20px;">📋 Tabla Resumen de Ondas</div>
+        <table class="data-table">
+          <tr><th>Tipo</th><th>Mec/EM</th><th>T/L</th><th>v típica</th></tr>
+          <tr><td>Sonido (aire)</td><td>Mec.</td><td>Long.</td><td>343 m/s</td></tr>
+          <tr><td>Sonido (agua)</td><td>Mec.</td><td>Long.</td><td>1480 m/s</td></tr>
+          <tr><td>Onda en cuerda</td><td>Mec.</td><td>Transv.</td><td>Variable</td></tr>
+          <tr><td>Ola oceánica</td><td>Mec.</td><td>Mixta</td><td>Variable</td></tr>
+          <tr><td>Sísmica P</td><td>Mec.</td><td>Long.</td><td>6-8 km/s</td></tr>
+          <tr><td>Sísmica S</td><td>Mec.</td><td>Transv.</td><td>3-4 km/s</td></tr>
+          <tr><td>Luz visible</td><td>EM</td><td>Transv.</td><td>3×10⁸ m/s</td></tr>
+        </table>
+        <div class="card" style="margin-top:14px;background:linear-gradient(135deg,#3d1a6e,#6b3fa0);color:#fff;">
+          <div class="card-title" style="color:#ffd600;">📐 Fórmulas Fundamentales</div>
+          <div style="font-family:'Courier New',monospace;font-size:13px;line-height:2;">
+            f = 1/T &nbsp;&nbsp; v = λ·f<br>
+            ψ(x,t) = A·sin(kx − ωt + φ₀)<br>
+            k = 2π/λ &nbsp;&nbsp; ω = 2πf<br>
+            β = 10·log₁₀(I/I₀) dB
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Standing Waves Simulator -->
+    <div class="simulator">
+      <div class="sim-title">🎸 Simulador: Ondas Estacionarias – Armónicos</div>
+      <canvas id="standing-canvas" width="680" height="140"></canvas>
+      <div class="sim-controls">
+        <div class="ctrl-group">
+          <label>Armónico n: <span id="harm-val">1</span></label>
+          <input type="range" id="harm" min="1" max="8" value="1" oninput="document.getElementById('harm-val').textContent=this.value">
+        </div>
+        <div class="ctrl-group">
+          <label>Amplitud: <span id="harm-a-val">55</span></label>
+          <input type="range" id="harm-a" min="20" max="60" value="55" oninput="document.getElementById('harm-a-val').textContent=this.value">
+        </div>
+        <div id="harm-info" style="font-size:12px;color:#00c9b1;font-weight:700;"></div>
+      </div>
+    </div>
+    <div class="page-num">10</div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════
+// GLOBAL ANIMATION LOOP
+// ══════════════════════════════════════
+let t = 0;
+let waveRunning = true;
+
+// ── 1. WAVE PROPAGATION ──
+const wc = document.getElementById('wave-canvas');
+const wctx = wc.getContext('2d');
+
+function drawWave() {
+  const W = wc.width, H = wc.height, cy = H/2;
+  wctx.clearRect(0,0,W,H);
+  // Grid
+  wctx.strokeStyle = 'rgba(180,143,216,0.15)'; wctx.lineWidth = 1;
+  for(let y=0;y<H;y+=20){wctx.beginPath();wctx.moveTo(0,y);wctx.lineTo(W,y);wctx.stroke();}
+  // Axis
+  wctx.strokeStyle='rgba(180,143,216,0.4)'; wctx.lineWidth=1;
+  wctx.beginPath(); wctx.moveTo(0,cy); wctx.lineTo(W,cy); wctx.stroke();
+
+  const A = parseFloat(document.getElementById('amp').value);
+  const f = parseFloat(document.getElementById('freq').value)/10;
+  const spd = parseFloat(document.getElementById('spd').value);
+  const damp = document.getElementById('damp').checked;
+
+  wctx.beginPath();
+  wctx.strokeStyle = '#00c9b1'; wctx.lineWidth = 2.5;
+  for(let x=0;x<W;x++){
+    const phase = (x / W) * 2 * Math.PI * f * 4 - t * spd * 0.08;
+    const envelope = damp ? Math.exp(-x / (W * 0.7)) : 1;
+    const y = cy - A * Math.sin(phase) * envelope;
+    x===0 ? wctx.moveTo(x,y) : wctx.lineTo(x,y);
+  }
+  wctx.stroke();
+
+  // Source dot
+  wctx.fillStyle='#e040fb'; wctx.beginPath(); wctx.arc(10, cy - A*Math.sin(-t*spd*0.08)*0.8, 6,0,Math.PI*2); wctx.fill();
+}
+
+// ── 2. PULSE ──
+const pc = document.getElementById('pulse-canvas');
+const pctx = pc.getContext('2d');
+let pulses = [];
+let periodicOn = false;
+
+function firePulse() {
+  pulses.push({ x: 20, pw: parseFloat(document.getElementById('pw').value), age: 0 });
+}
+
+function togglePeriodic() {
+  periodicOn = !periodicOn;
+  document.getElementById('period-btn').textContent = periodicOn ? '⏹ Detener Periódica' : '▶ Onda Periódica';
+}
+
+function resetPulse() { pulses = []; periodicOn = false; document.getElementById('period-btn').textContent='▶ Onda Periódica'; }
+
+function drawPulse() {
+  const W = pc.width, H = pc.height, cy = H/2;
+  pctx.clearRect(0,0,W,H);
+  pctx.strokeStyle='rgba(180,143,216,0.15)';
+  for(let y=0;y<H;y+=20){pctx.beginPath();pctx.moveTo(0,y);pctx.lineTo(W,y);pctx.stroke();}
+  pctx.strokeStyle='rgba(180,143,216,0.4)'; pctx.lineWidth=1;
+  pctx.beginPath(); pctx.moveTo(0,cy); pctx.lineTo(W,cy); pctx.stroke();
+
+  if(periodicOn && Math.floor(t*0.05)%60===0) firePulse();
+
+  pulses = pulses.filter(p => p.x < W + 200);
+  pulses.forEach(p => {
+    pctx.beginPath(); pctx.strokeStyle='#e040fb'; pctx.lineWidth=2.5;
+    for(let x=0;x<W;x++){
+      const dx = x - p.x;
+      const y = cy - 45 * Math.exp(-(dx*dx)/(p.pw*p.pw)) * Math.cos(dx*0.08);
+      x===0?pctx.moveTo(x,y):pctx.lineTo(x,y);
+    }
+    pctx.stroke();
+    p.x += 3;
+  });
+}
+
+// ── 3. WAVE TYPE ──
+const wtc = document.getElementById('wavetype-canvas');
+const wtctx = wtc.getContext('2d');
+let isTransverse = true;
+
+function toggleWaveType() {
+  isTransverse = !isTransverse;
+  document.getElementById('wt-btn').textContent = isTransverse ? '🔄 Cambiar a Longitudinal' : '🔄 Cambiar a Transversal';
+}
+
+function drawWaveType() {
+  const W = wtc.width, H = wtc.height;
+  wtctx.clearRect(0,0,W,H);
+
+  const spd = parseFloat(document.getElementById('wt-spd').value);
+  const amp = parseFloat(document.getElementById('wt-amp').value);
+  const nDots = 20;
+
+  if(isTransverse) {
+    // Label
+    wtctx.fillStyle='#00c9b1'; wtctx.font='bold 13px Nunito'; wtctx.fillText('ONDA TRANSVERSAL – Vibración ⊥ propagación',12,18);
+    const cy = H/2 + 10;
+    // Wave line
+    wtctx.beginPath(); wtctx.strokeStyle='rgba(180,143,216,0.3)'; wtctx.lineWidth=1.5;
+    wtctx.moveTo(0,cy); wtctx.lineTo(W,cy); wtctx.stroke();
+    // Sinusoid
+    wtctx.beginPath(); wtctx.strokeStyle='#6b3fa0'; wtctx.lineWidth=2;
+    for(let x=0;x<W;x++){
+      const y = cy - amp*Math.sin(x*0.04 - t*spd*0.06);
+      x===0?wtctx.moveTo(x,y):wtctx.lineTo(x,y);
+    }
+    wtctx.stroke();
+    // Dots
+    for(let i=0;i<nDots;i++){
+      const bx = (i+0.5)*(W/nDots);
+      const by = cy - amp*Math.sin(bx*0.04 - t*spd*0.06);
+      wtctx.beginPath(); wtctx.fillStyle='#e040fb';
+      wtctx.arc(bx, by, 5,0,Math.PI*2); wtctx.fill();
+    }
+    // Arrow propagation
+    wtctx.fillStyle='#ffd600'; wtctx.font='bold 12px Nunito';
+    wtctx.fillText('→ Propagación', W-130, cy+25);
+  } else {
+    wtctx.fillStyle='#ffd600'; wtctx.font='bold 13px Nunito'; wtctx.fillText('ONDA LONGITUDINAL – Vibración ∥ propagación',12,18);
+    const cy = H/2 + 10;
+    wtctx.strokeStyle='rgba(180,143,216,0.3)'; wtctx.lineWidth=1;
+    wtctx.beginPath(); wtctx.moveTo(0,cy); wtctx.lineTo(W,cy); wtctx.stroke();
+    for(let i=0;i<nDots;i++){
+      const bx0 = (i+0.5)*(W/nDots);
+      const bx = bx0 + amp*0.5*Math.sin(bx0*0.04 - t*spd*0.06);
+      wtctx.beginPath(); wtctx.fillStyle='#e040fb';
+      wtctx.arc(bx, cy, 5, 0, Math.PI*2); wtctx.fill();
+      // Compression density
+      if(i<nDots-1){
+        const bx1 = (i+1.5)*(W/nDots) + amp*0.5*Math.sin((i+1.5)*(W/nDots)*0.04 - t*spd*0.06);
+        const d = Math.abs(bx1-bx);
+        const alpha = Math.min(1, 35/d);
+        wtctx.strokeStyle=`rgba(107,63,160,${alpha})`; wtctx.lineWidth=2;
+        wtctx.beginPath(); wtctx.moveTo(bx,cy); wtctx.lineTo(bx1,cy); wtctx.stroke();
+      }
+    }
+    wtctx.fillStyle='#ffd600'; wtctx.font='bold 12px Nunito';
+    wtctx.fillText('→ Propagación', W-130, cy+25);
+  }
+}
+
+// ── 4. ANATOMY ──
+const ac = document.getElementById('anatomy-canvas');
+const actx = ac.getContext('2d');
+
+function drawAnatomy() {
+  const W = ac.width, H = ac.height, cy = H/2;
+  actx.clearRect(0,0,W,H);
+  const A = parseFloat(document.getElementById('an-amp').value);
+  const lam = parseFloat(document.getElementById('an-lam').value);
+  const labels = document.getElementById('an-labels').checked;
+
+  // Axis
+  actx.strokeStyle='rgba(180,143,216,0.4)'; actx.lineWidth=1;
+  actx.beginPath(); actx.moveTo(0,cy); actx.lineTo(W,cy); actx.stroke();
+
+  // Wave
+  actx.beginPath(); actx.strokeStyle='#b48fd8'; actx.lineWidth=2.5;
+  for(let x=0;x<W;x++){
+    const y = cy - A*Math.sin(2*Math.PI*x/lam - t*0.04);
+    x===0?actx.moveTo(x,y):actx.lineTo(x,y);
+  }
+  actx.stroke();
+
+  if(!labels) return;
+
+  // Find crest
+  const cx1 = lam/4;
+  const cy1 = cy - A;
+  const vx1 = 3*lam/4;
+  const vy1 = cy + A;
+
+  // Cresta
+  actx.fillStyle='#e040fb'; actx.beginPath(); actx.arc(cx1,cy1,6,0,Math.PI*2); actx.fill();
+  actx.fillStyle='#e040fb'; actx.font='bold 12px Nunito'; actx.fillText('Cresta',cx1+8,cy1-4);
+
+  // Valle
+  actx.fillStyle='#2196f3'; actx.beginPath(); actx.arc(vx1,vy1,6,0,Math.PI*2); actx.fill();
+  actx.fillStyle='#2196f3'; actx.font='bold 12px Nunito'; actx.fillText('Valle',vx1+8,vy1+14);
+
+  // Nodo
+  const nx = lam/2;
+  actx.fillStyle='#4caf50'; actx.beginPath(); actx.arc(nx,cy,6,0,Math.PI*2); actx.fill();
+  actx.fillStyle='#4caf50'; actx.fillText('Nodo',nx+8,cy+16);
+
+  // Amplitude arrow
+  actx.strokeStyle='#ffd600'; actx.lineWidth=1.5;
+  actx.setLineDash([4,3]);
+  actx.beginPath(); actx.moveTo(cx1,cy); actx.lineTo(cx1,cy1); actx.stroke();
+  actx.setLineDash([]);
+  actx.fillStyle='#ffd600'; actx.fillText('A',cx1-18,cy-(A/2));
+
+  // Lambda arrow
+  const lx = W < lam*2 ? 10 : 10;
+  actx.strokeStyle='#ff7043'; actx.lineWidth=1.5;
+  actx.beginPath(); actx.moveTo(lx, cy+A+16); actx.lineTo(lx+lam, cy+A+16); actx.stroke();
+  actx.fillStyle='#ff7043'; actx.fillText('λ', lx+lam/2-5, cy+A+28);
+}
+
+// ── 5. SUPERPOSITION ──
+const sc = document.getElementById('super-canvas');
+const sctx = sc.getContext('2d');
+
+function drawSuper() {
+  const W = sc.width, H = sc.height, cy = H/2;
+  sctx.clearRect(0,0,W,H);
+  const A1 = parseFloat(document.getElementById('s1a').value);
+  const f1 = parseFloat(document.getElementById('s1f').value);
+  const A2 = parseFloat(document.getElementById('s2a').value);
+  const f2 = parseFloat(document.getElementById('s2f').value);
+  const showComp = document.getElementById('show-components').checked;
+
+  if(showComp){
+    // Wave 1
+    sctx.beginPath(); sctx.strokeStyle='rgba(0,201,177,0.6)'; sctx.lineWidth=1.5;
+    for(let x=0;x<W;x++){
+      const y = cy - A1*Math.sin(f1*x*0.025 - t*0.05);
+      x===0?sctx.moveTo(x,y):sctx.lineTo(x,y);
+    }
+    sctx.stroke();
+    // Wave 2
+    sctx.beginPath(); sctx.strokeStyle='rgba(224,64,251,0.6)'; sctx.lineWidth=1.5;
+    for(let x=0;x<W;x++){
+      const y = cy - A2*Math.sin(f2*x*0.025 - t*0.07);
+      x===0?sctx.moveTo(x,y):sctx.lineTo(x,y);
+    }
+    sctx.stroke();
+  }
+  // Resultant
+  sctx.beginPath(); sctx.strokeStyle='#ffd600'; sctx.lineWidth=2.5;
+  for(let x=0;x<W;x++){
+    const y1 = A1*Math.sin(f1*x*0.025 - t*0.05);
+    const y2 = A2*Math.sin(f2*x*0.025 - t*0.07);
+    const y = cy - (y1+y2);
+    x===0?sctx.moveTo(x,y):sctx.lineTo(x,y);
+  }
+  sctx.stroke();
+  // Legend
+  sctx.font='bold 11px Nunito';
+  if(showComp){
+    sctx.fillStyle='rgba(0,201,177,0.9)'; sctx.fillText('● Onda 1',8,14);
+    sctx.fillStyle='rgba(224,64,251,0.9)'; sctx.fillText('● Onda 2',80,14);
+  }
+  sctx.fillStyle='#ffd600'; sctx.fillText('● Resultante',showComp?160:8,14);
+}
+
+// ── 6. SOUND ──
+const sndC = document.getElementById('sound-canvas');
+const sndCtx = sndC.getContext('2d');
+
+function drawSound() {
+  const W = sndC.width, H = sndC.height, cy = H/2;
+  sndCtx.clearRect(0,0,W,H);
+  const f = parseFloat(document.getElementById('snd-f').value);
+  const A = parseFloat(document.getElementById('snd-a').value);
+  const temp = parseFloat(document.getElementById('snd-t').value);
+  const v = 331 + 0.6*temp;
+  const lam = v/f;
+
+  // Compression/rarefaction visualization
+  for(let x=0;x<W;x++){
+    const phase = (x/W)*2*Math.PI*(W/lam) - t*0.06;
+    const density = 0.5 + 0.5*Math.sin(phase);
+    sndCtx.fillStyle = `rgba(107,63,160,${density*0.35})`;
+    sndCtx.fillRect(x,0,1,H);
+  }
+  // Wave line
+  sndCtx.beginPath(); sndCtx.strokeStyle='#00c9b1'; sndCtx.lineWidth=2.5;
+  for(let x=0;x<W;x++){
+    const phase = (x/W)*2*Math.PI*(W/lam) - t*0.06;
+    const y = cy - A*Math.sin(phase);
+    x===0?sndCtx.moveTo(x,y):sndCtx.lineTo(x,y);
+  }
+  sndCtx.stroke();
+  // Info
+  document.getElementById('snd-info').textContent =
+    `v = ${v.toFixed(0)} m/s  |  λ = ${lam.toFixed(2)} m  |  T = ${(1/f*1000).toFixed(2)} ms`;
+}
+
+// ── 7. DOPPLER ──
+const dop = document.getElementById('doppler-canvas');
+const dopCtx = dop.getContext('2d');
+let dopSrcX = 60;
+let dopDir = 1;
+
+function drawDoppler() {
+  const W = dop.width, H = dop.height;
+  dopCtx.clearRect(0,0,W,H);
+
+  const vs = parseFloat(document.getElementById('dop-vs').value);
+  const fs = parseFloat(document.getElementById('dop-fs').value);
+  const v = 343;
+
+  dopSrcX += dopDir * vs * 0.012;
+  if(dopSrcX > W-40) dopDir = -1;
+  if(dopSrcX < 40) dopDir = 1;
+
+  // Draw source
+  dopCtx.fillStyle='#e040fb'; dopCtx.beginPath(); dopCtx.arc(dopSrcX,H/2,12,0,Math.PI*2); dopCtx.fill();
+  dopCtx.fillStyle='#fff'; dopCtx.font='bold 9px Nunito'; dopCtx.textAlign='center';
+  dopCtx.fillText('♪',dopSrcX,H/2+4); dopCtx.textAlign='left';
+
+  // Draw wavefronts (simplified)
+  const nRings = 6;
+  for(let i=0;i<nRings;i++){
+    const age = (t*0.4 - i*12);
+    if(age < 0) continue;
+    const r = age * 0.8;
+    if(r > W) continue;
+    // Offset center based on velocity (Doppler effect visualization)
+    const cx_offset = dopDir * vs * 0.012 * (i*12);
+    const cx = dopSrcX - cx_offset;
+    const alpha = Math.max(0, 1 - r/280);
+    dopCtx.strokeStyle = `rgba(0,201,177,${alpha*0.7})`;
+    dopCtx.lineWidth = 1.5;
+    dopCtx.beginPath();
+    dopCtx.arc(cx, H/2, r, 0, Math.PI*2);
+    dopCtx.stroke();
+  }
+
+  // Observer
+  const obsX = dopDir === 1 ? W-30 : 30;
+  dopCtx.fillStyle='#ffd600'; dopCtx.beginPath(); dopCtx.arc(obsX,H/2,10,0,Math.PI*2); dopCtx.fill();
+  dopCtx.fillStyle='#2a0a4a'; dopCtx.font='bold 10px Nunito'; dopCtx.textAlign='center';
+  dopCtx.fillText('👁',obsX,H/2+4); dopCtx.textAlign='left';
+
+  // Info
+  const approaching = (dopDir===1 && obsX>dopSrcX)||(dopDir===-1 && obsX<dopSrcX);
+  const fObs = approaching ? fs*(v/(v-vs)) : fs*(v/(v+vs));
+  document.getElementById('dop-info').textContent =
+    `f_fuente = ${fs} Hz  |  f_observada = ${Math.round(fObs)} Hz  |  ${approaching?'🔺 Acercándose':'🔻 Alejándose'}`;
+}
+
+// ── 8. STANDING WAVES ──
+const stC = document.getElementById('standing-canvas');
+const stCtx = stC.getContext('2d');
+
+function drawStanding() {
+  const W = stC.width, H = stC.height, cy = H/2;
+  stCtx.clearRect(0,0,W,H);
+  const n = parseInt(document.getElementById('harm').value);
+  const A = parseFloat(document.getElementById('harm-a').value);
+
+  // Fixed ends
+  stCtx.fillStyle='#6b3fa0';
+  stCtx.fillRect(0, cy-A-10, 6, A*2+20);
+  stCtx.fillRect(W-6, cy-A-10, 6, A*2+20);
+
+  // Axis
+  stCtx.strokeStyle='rgba(180,143,216,0.3)'; stCtx.lineWidth=1;
+  stCtx.beginPath(); stCtx.moveTo(0,cy); stCtx.lineTo(W,cy); stCtx.stroke();
+
+  // Forward wave
+  stCtx.beginPath(); stCtx.strokeStyle='rgba(0,201,177,0.4)'; stCtx.lineWidth=1.5;
+  for(let x=0;x<W;x++){
+    const y = cy - A*Math.sin(n*Math.PI*x/W - t*0.07);
+    x===0?stCtx.moveTo(x,y):stCtx.lineTo(x,y);
+  }
+  stCtx.stroke();
+
+  // Backward wave
+  stCtx.beginPath(); stCtx.strokeStyle='rgba(224,64,251,0.4)'; stCtx.lineWidth=1.5;
+  for(let x=0;x<W;x++){
+    const y = cy - A*Math.sin(n*Math.PI*x/W + t*0.07);
+    x===0?stCtx.moveTo(x,y):stCtx.lineTo(x,y);
+  }
+  stCtx.stroke();
+
+  // Resultant
+  stCtx.beginPath(); stCtx.strokeStyle='#ffd600'; stCtx.lineWidth=2.5;
+  for(let x=0;x<W;x++){
+    const envelope = Math.sin(n*Math.PI*x/W);
+    const y = cy - 2*A*Math.cos(t*0.07)*envelope;
+    x===0?stCtx.moveTo(x,y):stCtx.lineTo(x,y);
+  }
+  stCtx.stroke();
+
+  // Nodes & antinodes labels
+  stCtx.font='bold 11px Nunito';
+  for(let i=0;i<=n;i++){
+    const nx = i*(W/n);
+    stCtx.fillStyle='#4caf50'; stCtx.beginPath(); stCtx.arc(nx,cy,5,0,Math.PI*2); stCtx.fill();
+  }
+
+  // Info
+  document.getElementById('harm-info').textContent =
+    `n=${n} | Armónico ${n}° | Nodos: ${n+1} | Antinodos: ${n} | fₙ = ${n}·f₁`;
+}
+
+// ── MASTER LOOP ──
+function loop() {
+  if(waveRunning) t++;
+  drawWave();
+  drawPulse();
+  drawWaveType();
+  drawAnatomy();
+  drawSuper();
+  drawSound();
+  drawDoppler();
+  drawStanding();
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
+</body>
+</html>
